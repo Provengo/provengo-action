@@ -5,6 +5,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run your Action
-        uses: ./ .github/actions/provengo-action
-      - name: Run provengo
-        uses: provengo create newProject
+        uses: ./ .github/actions/provengo
