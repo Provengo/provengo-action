@@ -1,4 +1,4 @@
-const core = require('@actions/core');
+// const core = require('@actions/core');
 const { exec } = require('child_process');
 const fs = require('fs');
 const https = require('https');
@@ -65,7 +65,7 @@ async function run() {
                 console.error(`Errors: ${stderr}`);
             });
 
-            
+
             fullCommand = `provengo run new/pr`;
             exec(fullCommand, (executeError, stdout, stderr) => {
                 if (executeError) {
