@@ -12,9 +12,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run My Download Action
-        uses: ../action.yml
+      - name: echo
+        uses: ./action
         with:
           command: 'echo "Executing command with parameters"'
+
+
+      - name: Run My Download Action
+        uses: ./action
+        with:
+          command: 'run'
           basic_parameters: '{"param1":"value1","param2":"value2"}'
           command_parameters: '{"paramA":"valueA","paramB":"valueB"}'
