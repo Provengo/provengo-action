@@ -1,6 +1,0 @@
-name: 'provengo'
-description: 'run your provengo project'
-runs:
-  using: 'node12'  # or 'docker' if you are using a Docker container
-  steps:
-    - run: 'echo "Hello, world!"'

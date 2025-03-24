@@ -1,0 +1,20 @@
+name: Example Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-download-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run My Download Action
+        uses: ./ # Path to your action
+        with:
+          command: 'echo "Executing command with parameters"'
+          basic_parameters: '{"param1":"value1","param2":"value2"}'
+          command_parameters: '{"paramA":"valueA","paramB":"valueB"}'
