@@ -13,13 +13,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: echo
-        uses: ./action
+        uses: ./
         with:
           command: 'echo "Executing command with parameters"'
 
 
       - name: Run My Download Action
-        uses: ./action
+        uses: ./
         with:
           command: 'run'
           basic_parameters: '{"param1":"value1","param2":"value2"}'
