@@ -1,4 +1,4 @@
-// const core = require('@actions/core');
+const core = require('@actions/core');
 const { exec } = require('child_process');
 const fs = require('fs');
 const https = require('https');
