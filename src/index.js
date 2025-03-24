@@ -2,7 +2,6 @@
 const { exec } = require('child_process');
 const fs = require('fs');
 const https = require('https');
-const path = require('path');
 
 // Function to download a file
 function downloadFile(url, dest) {
@@ -28,6 +27,10 @@ async function run() {
         const basicParameters = JSON.parse(core.getInput('basic_parameters'));
         const commandParameters = JSON.parse(core.getInput('command_parameters'));
 
+        console.log(`command: ${command}`);
+        console.log(`basicParameters: ${basicParameters}`);
+        console.log(`commandParameters: ${commandParameters}`);
+
         // Define the URL to download from (customize this)
         const downloadProvengo = 'https://downloads.provengo.tech/unix-dist/deb/Provengo-deb.deb';
 
@@ -36,48 +39,46 @@ async function run() {
 
         // Unzip the downloaded software if it’s a zip file (adjust as needed)
         const unzipCommand = `sudo apt-get install ${outputFilePath}`;
-        exec(unzipCommand, (unzipError) => {
+        exec(unzipCommand, (installationError) => {
             if (installationError) {
                 core.setFailed(`Installation failed: ${installationError.message}`);
                 return;
             }
 
-
-            //   const softwarePath = path.resolve('./your-software/your-executable-or-script'); // Adjust as needed
-
-            //   // Set permissions if needed (for Unix-like systems)
-            //   fs.chmodSync(softwarePath, '755'); // Make executable
-
-            // Build the command to run your software
-            const params = [
-                // JSON.stringify(basicParameters),     // Basic parameters
-                // JSON.stringify(commandParameters)     // Command-specific parameters
-            ].join(' ');
-
-            const fullCommand = `provengo --batch-mode create new/pr`;
-
-            exec(fullCommand, (executeError, stdout, stderr) => {
-                if (executeError) {
-                    core.setFailed(`Execution failed: ${executeError.message}`);
-                    return;
-                }
-                console.log(`Output: ${stdout}`);
-                console.error(`Errors: ${stderr}`);
-            });
-
-
-            fullCommand = `provengo run new/pr`;
-            exec(fullCommand, (executeError, stdout, stderr) => {
-                if (executeError) {
-                    core.setFailed(`Execution failed: ${executeError.message}`);
-                    return;
-                }
-                console.log(`Output: ${stdout}`);
-                console.error(`Errors: ${stderr}`);
-            });
-
-
         });
+        //   const softwarePath = path.resolve('./your-software/your-executable-or-script'); // Adjust as needed
+
+        //   // Set permissions if needed (for Unix-like systems)
+        //   fs.chmodSync(softwarePath, '755'); // Make executable
+
+        // Build the command to run your software
+        const params = [
+            // JSON.stringify(basicParameters),     // Basic parameters
+            // JSON.stringify(commandParameters)     // Command-specific parameters
+        ].join(' ');
+
+        const fullCommand = `provengo --batch-mode create new/pr`;
+
+        exec(fullCommand, (executeError, stdout, stderr) => {
+            if (executeError) {
+                core.setFailed(`Execution failed: ${executeError.message}`);
+                return;
+            }
+            console.log(`Output: ${stdout}`);
+            console.error(`Errors: ${stderr}`);
+        });
+
+
+        fullCommand = `provengo run new/pr`;
+        exec(fullCommand, (executeError, stdout, stderr) => {
+            if (executeError) {
+                core.setFailed(`Execution failed: ${executeError.message}`);
+                return;
+            }
+            console.log(`Output: ${stdout}`);
+            console.error(`Errors: ${stderr}`);
+        });
+
     } catch (error) {
         core.setFailed(error.message);
     }
