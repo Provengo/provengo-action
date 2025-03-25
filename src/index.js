@@ -68,7 +68,7 @@ const execPromise = util.promisify(exec);
              // JSON.stringify(commandParameters)     // Command-specific parameters
          ].join(' ');
 
-//         let fullCommand = `provengo --batch-mode create new/pr`;
+         let fullCommand = `provengo --batch-mode create new/pr`;
 //
          console.log("4")
          exec(fullCommand, (executeError, stdout, stderr) => {
