@@ -1,7 +1,8 @@
- const core = require('@actions/core');
- const { exec } = require('child_process');
- const fs = require('fs');
- const https = require('https');
+const core = require('@actions/core');
+const { exec } = require('child_process');
+
+const fs = require('fs');
+const https = require('https');
 const util = require('util');
 
 
@@ -26,7 +27,6 @@ const util = require('util');
      });
  }
 
-const execPromise = util.promisify(exec);
 
  async function run() {
      try {
@@ -54,7 +54,7 @@ const execPromise = util.promisify(exec);
         console.log("2")
          // Unzip the downloaded software if it’s a zip file (adjust as needed)
          let installProvengo = `sudo apt-get install ${outputFilePath}`;
-         await execPromise(installProvengo, (installationError, stdout, stderr) => {
+         let output = exec(installProvengo, (installationError, stdout, stderr) => {
              if (installationError) {
                  core.setFailed(`Installation failed: ${installationError.message}`);
                  return;
