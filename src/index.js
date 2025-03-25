@@ -60,7 +60,7 @@ const execPromise = util.promisify(exec);
             console.log(`install provengo`);
             console.log(`install provengo Output: ${stdout}`);
             console.error(`install provengo Errors: ${stderr}`);
-         }) );
+         });
         console.log("3")
          // Build the command to run your software
          let params = [
