@@ -24,18 +24,20 @@
  async function run() {
      try {
          const command = core.getInput('command');
+         const stringBasicParameters = core.getInput('basic_parameters');
          const basicParameters = JSON.parse(core.getInput('basic_parameters'));
+         const stringCommandParameters = core.getInput('command_parameters');
          const commandParameters = JSON.parse(core.getInput('command_parameters'));
 
          console.log(`command: ${command}`);
-         console.log(`basicParameters: ${basicParameters}`);
-         console.log(`commandParameters: ${commandParameters}`);
+         console.log(`basicParameters: ${stringBasicParameters}`);
+         console.log(`commandParameters: ${stringCommandParameters}`);
 
          // Define the URL to download from (customize this)
          const downloadProvengo = 'https://downloads.provengo.tech/unix-dist/deb/Provengo-deb.deb';
-
+         const outputFilePath = "./Provengo-deb.deb";
          // Download the software
-         await downloadFile(downloadProvengo, "./Provengo-deb.deb");
+         await downloadFile(downloadProvengo, outputFilePath);
 
          // Unzip the downloaded software if it’s a zip file (adjust as needed)
          const unzipCommand = `sudo apt-get install ${outputFilePath}`;
