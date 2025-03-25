@@ -49,6 +49,7 @@
                  core.setFailed(`Installation failed: ${installationError.message}`);
                  return;
              }
+            console.log(`install provengo`);
             console.log(`install provengo Output: ${stdout}`);
             console.error(`install provengo Errors: ${stderr}`);
          });
@@ -70,8 +71,8 @@
                  core.setFailed(`Execution failed: ${executeError.message}`);
                  return;
              }
-             console.log(`Output: ${stdout}`);
-             console.error(`Errors: ${stderr}`);
+             console.log(`create provengo Output: ${stdout}`);
+             console.error(`create provengo Errors: ${stderr}`);
          });
 
 
@@ -81,8 +82,8 @@
                  core.setFailed(`Execution failed: ${executeError.message}`);
                  return;
              }
-             console.log(`Output: ${stdout}`);
-             console.error(`Errors: ${stderr}`);
+             console.log(`run provengo Output: ${stdout}`);
+             console.error(`run provengo Errors: ${stderr}`);
          });
 
      } catch (error) {
