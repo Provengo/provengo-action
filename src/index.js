@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const { exec } = require('child_process');
+const { execSync } = require('child_process');
 
 const fs = require('fs');
 const https = require('https');
@@ -54,13 +55,7 @@ const util = require('util');
         console.log("2")
          // Unzip the downloaded software if it’s a zip file (adjust as needed)
          let installProvengo = `sudo apt-get install ${outputFilePath}`;
-         let output = exec(installProvengo, (installationError, stdout, stderr) => {
-             if (installationError) {
-                 core.setFailed(`Installation failed: ${installationError.message}`);
-                 return;
-             }
-            console.log(`install provengo`);
-         });
+         let output = execSync(installProvengo);
         console.log("3")
          // Build the command to run your software
          let params = [
