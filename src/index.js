@@ -24,6 +24,8 @@
      });
  }
 
+const execPromise = util.promisify(exec);
+
  async function run() {
      try {
          let command = core.getInput('command');
@@ -50,7 +52,7 @@
         console.log("2")
          // Unzip the downloaded software if it’s a zip file (adjust as needed)
          let installProvengo = `sudo apt-get install ${outputFilePath}`;
-         exec(installProvengo, (installationError, stdout, stderr) => {
+         await execPromise(installProvengo, (installationError, stdout, stderr) => {
              if (installationError) {
                  core.setFailed(`Installation failed: ${installationError.message}`);
                  return;
@@ -58,7 +60,7 @@
             console.log(`install provengo`);
             console.log(`install provengo Output: ${stdout}`);
             console.error(`install provengo Errors: ${stderr}`);
-         });
+         }) );
         console.log("3")
          // Build the command to run your software
          let params = [
