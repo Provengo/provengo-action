@@ -42,6 +42,12 @@
          // Download the software
          await downloadFile(downloadProvengo, outputFilePath);
 
+         //   const softwarePath = path.resolve('./your-software/your-executable-or-script'); // Adjust as needed
+
+            // Set permissions if needed (for Unix-like systems)
+            fs.chmodSync(outputFilePath, '755'); // Make executable
+
+
          // Unzip the downloaded software if it’s a zip file (adjust as needed)
          const installProvengo = `sudo apt-get install ${outputFilePath}`;
          exec(installProvengo, (installationError) => {
@@ -53,10 +59,6 @@
             console.log(`install provengo Output: ${stdout}`);
             console.error(`install provengo Errors: ${stderr}`);
          });
-         //   const softwarePath = path.resolve('./your-software/your-executable-or-script'); // Adjust as needed
-
-         //   // Set permissions if needed (for Unix-like systems)
-         //   fs.chmodSync(softwarePath, '755'); // Make executable
 
          // Build the command to run your software
          const params = [
