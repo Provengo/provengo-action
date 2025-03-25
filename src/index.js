@@ -50,7 +50,7 @@
 
          // Unzip the downloaded software if it’s a zip file (adjust as needed)
          let installProvengo = `sudo apt-get install ${outputFilePath}`;
-         exec(installProvengo, (installationError) => {
+         exec(installProvengo, (installationError, stdout, stderr) => {
              if (installationError) {
                  core.setFailed(`Installation failed: ${installationError.message}`);
                  return;
@@ -66,27 +66,27 @@
              // JSON.stringify(commandParameters)     // Command-specific parameters
          ].join(' ');
 
-         let fullCommand = `provengo --batch-mode create new/pr`;
-
-         exec(fullCommand, (executeError, stdout, stderr) => {
-             if (executeError) {
-                 core.setFailed(`Execution failed: ${executeError.message}`);
-                 return;
-             }
-             console.log(`create provengo Output: ${stdout}`);
-             console.error(`create provengo Errors: ${stderr}`);
-         });
-
-
-         fullCommand = `provengo run new/pr`;
-         exec(fullCommand, (executeError, stdout, stderr) => {
-             if (executeError) {
-                 core.setFailed(`Execution failed: ${executeError.message}`);
-                 return;
-             }
-             console.log(`run provengo Output: ${stdout}`);
-             console.error(`run provengo Errors: ${stderr}`);
-         });
+//         let fullCommand = `provengo --batch-mode create new/pr`;
+//
+//         exec(fullCommand, (executeError, stdout, stderr) => {
+//             if (executeError) {
+//                 core.setFailed(`Execution failed: ${executeError.message}`);
+//                 return;
+//             }
+//             console.log(`create provengo Output: ${stdout}`);
+//             console.error(`create provengo Errors: ${stderr}`);
+//         });
+//
+//
+//         fullCommand = `provengo run new/pr`;
+//         exec(fullCommand, (executeError, stdout, stderr) => {
+//             if (executeError) {
+//                 core.setFailed(`Execution failed: ${executeError.message}`);
+//                 return;
+//             }
+//             console.log(`run provengo Output: ${stdout}`);
+//             console.error(`run provengo Errors: ${stderr}`);
+//         });
 
      } catch (error) {
          core.setFailed(error.message);
