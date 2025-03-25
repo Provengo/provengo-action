@@ -5,7 +5,9 @@
 
  // Function to download a file
  function downloadFile(url, dest) {
+    console.log(`start download file`);
      return new Promise((resolve, reject) => {
+        console.log(`start download provengo`);
          const file = fs.createWriteStream(dest);
          https.get(url, (response) => {
              response.pipe(file);
@@ -18,6 +20,7 @@
              fs.unlink(dest); // Delete the file async if there's an error
              reject(`Error downloading the file: ${err.message}`);
          });
+         console.log(`end download provengo`);
      });
  }
 
@@ -40,13 +43,14 @@
          await downloadFile(downloadProvengo, outputFilePath);
 
          // Unzip the downloaded software if it’s a zip file (adjust as needed)
-         const unzipCommand = `sudo apt-get install ${outputFilePath}`;
-         exec(unzipCommand, (installationError) => {
+         const installProvengo = `sudo apt-get install ${outputFilePath}`;
+         exec(installProvengo, (installationError) => {
              if (installationError) {
                  core.setFailed(`Installation failed: ${installationError.message}`);
                  return;
              }
-
+            console.log(`install provengo Output: ${stdout}`);
+            console.error(`install provengo Errors: ${stderr}`);
          });
          //   const softwarePath = path.resolve('./your-software/your-executable-or-script'); // Adjust as needed
 
