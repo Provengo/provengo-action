@@ -40,8 +40,7 @@ const util = require('util');
  async function run() {
      try {
          let command = core.getInput('command');
-         let run = core.getInput('run');
-         console.log(`$$$$$$$$$$$$ : ${run} $$$$$$$$$$`);
+         console.log(`###### : ${run} #######`);
 
          let basicParameters = JSON.parse(core.getInput('basic_parameters'));
          let commandParameters = JSON.parse(core.getInput('command_parameters'));
