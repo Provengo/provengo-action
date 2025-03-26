@@ -16,7 +16,7 @@ jobs:
         uses: ./
         with:
           command: 'echo "Executing command with parameters"'
-        run: provengo create .new/test2
+#        run: provengo create .new/test2
 
 
       - name: Run My Download Action
