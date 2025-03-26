@@ -32,11 +32,11 @@ async function run() {
         const stdout = execSync(`provengo -v`);
         console.log(`Provengo Installed, Version: ${stdout.trim()}`);
     } catch (error) {
+         console.log("Install Provengo");
          let downloadProvengo;
          let outputFilePath;
          let installProvengo;
         try {
-
             const platform = process.platform;
             if(platform == "linux"){
                 const osRelease = fs.readFileSync('/etc/os-release');
@@ -53,8 +53,15 @@ async function run() {
 
             await downloadFile(downloadProvengo, outputFilePath); // Download the software
             fs.chmodSync(outputFilePath, '755'); // Make executable
-            let output = execSync(installProvengo);
-            console.log(output);
+            execSync(installProvengo, (error, stdout, stderr) => {
+                if (error) {
+                  core.setFailed(`Execution failed: ${error.message}`);
+                  return;
+                }
+                console.error(`stderr: ${stderr}`);
+            });
+            const stdout = execSync(`provengo -v`);
+            console.log(`Provengo Installed, Version: ${stdout.trim()}`);
 
         } catch (error) {
             core.setFailed(error.message);
