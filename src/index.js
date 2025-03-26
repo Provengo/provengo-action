@@ -1,55 +1,67 @@
 const core = require('@actions/core');
 const { execSync } = require('child_process');
-
+const os = require('os');
 const fs = require('fs');
 const https = require('https');
 const util = require('util');
 
- // Function to download a file
- function downloadFile(url, dest) {
+// Function to download a file
+function downloadFile(url, dest) {
     console.log(`start download file`);
-     return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         console.log(`start download provengo`);
-         let file = fs.createWriteStream(dest);
-         https.get(url, (response) => {
-             response.pipe(file);
-             file.on('finish', () => {
-                 file.close();
-                 console.log('Download completed.');
-                 resolve(dest); // Resolve the promise
-             });
-         }).on('error', (err) => {
-             fs.unlink(dest); // Delete the file async if there's an error
-             reject(`Error downloading the file: ${err.message}`);
-         });
-         console.log(`end download provengo`);
-     });
- }
+        let file = fs.createWriteStream(dest);
+        https.get(url, (response) => {
+            response.pipe(file);
+            file.on('finish', () => {
+                file.close();
+                console.log('Download completed.');
+                resolve(dest); // Resolve the promise
+            });
+        }).on('error', (err) => {
+            fs.unlink(dest); // Delete the file async if there's an error
+            reject(`Error downloading the file: ${err.message}`);
+        });
+        console.log(`end download provengo`);
+    });
+}
 
- async function run() {
-     try {
+async function run() {
+//    verify if provengo is installed, else install.
+    try {
+        const stdout = execSync(`provengo -v`);
+        console.log(`Provengo Installed, Version: ${stdout.trim()}`);
+    } catch (error) {
+         let downloadProvengo;
+         let outputFilePath;
+         let installProvengo;
+        try {
 
-         // Define the URL to download from (customize this)
-         let downloadProvengo = 'https://downloads.provengo.tech/unix-dist/deb/Provengo-deb.deb';
-         let outputFilePath = "./Provengo-deb.deb";
-         // Download the software
-         await downloadFile(downloadProvengo, outputFilePath);
+            const platform = process.platform;
+            if(platform == "linux"){
+                const osRelease = fs.readFileSync('/etc/os-release');
+                if (osRelease.includes('ID=debian') || osRelease.includes('ID=ubuntu')) {
+                    downloadProvengo = 'https://downloads.provengo.tech/unix-dist/deb/Provengo-deb.deb';
+                    outputFilePath = "./Provengo-deb.deb";
+                    installProvengo = `sudo apt-get install ${outputFilePath}`;
+                } else if (osRelease.includes('ID=fedora') || osRelease.includes('ID=centos') || osRelease.includes('ID=rhel')) {
+                    downloadProvengo = 'https://downloads.provengo.tech/unix-dist/rpm/Provengo-rpm.rpm';
+                    outputFilePath = "./Provengo-rpm.rpm";
+                    installProvengo = `sudo rpm -i Provengo-rpm.rpm`;
+                }
+            }
 
-         //   let softwarePath = path.resolve('./your-software/your-executable-or-script'); // Adjust as needed
+            await downloadFile(downloadProvengo, outputFilePath); // Download the software
+            fs.chmodSync(outputFilePath, '755'); // Make executable
+            let output = execSync(installProvengo);
 
-            // Set permissions if needed (for Unix-like systems)
-         fs.chmodSync(outputFilePath, '755'); // Make executable
+        } catch (error) {
+            core.setFailed(error.message);
+        }
+    }
+}
 
-         // Unzip the downloaded software if it’s a zip file (adjust as needed)
-//         let installProvengo = `sudo apt-get install ${outputFilePath}`;
-//         let output = execSync(installProvengo);
-
-     } catch (error) {
-         core.setFailed(error.message);
-     }
- }
-
- run();
+run();
 
 
 //let core = require('@actions/core');
