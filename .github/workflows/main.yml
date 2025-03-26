@@ -16,10 +16,12 @@ jobs:
         uses: ./
         with:
           command: 'echo "Executing command with parameters"'
+        run: test this for me
 
 
       - name: Run My Download Action
         uses: ./
+        run: provengo run ../test
         with:
           command: 'run'
           basic_parameters: '{"param1":"value1","param2":"value2"}'

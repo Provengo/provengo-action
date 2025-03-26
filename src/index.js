@@ -6,6 +6,15 @@ const fs = require('fs');
 const https = require('https');
 const util = require('util');
 
+//const basicParametersToFlags = {"batch-mode": {"flag": "--batch-mode", "input": false}, "verbose":  {"flag": "--verbose", "input": false}, "profile":  {flag: "-p", "input": true}} //basic}
+//const parametersToFlags = { "selenium-server": {"flag": "--selenium-server", "input": true}, "junit-report":  {"flag": "--junit-report", "input": false}, //run
+//                            "highlight": {"flag": "--highlight", "input": true}, "layout": {"flag": "--layout", "input": true} , "style": {"flag": "--style", "input":true} //analyze
+//                            "single-file": {"flag": "--single-file", "input":false} , "overwrite": {"flag": "--overwrite", "input":false}, //gen-scripts
+//                            "format": {"flag": "-f", "input":true}, "suites": {"flag": "--suites", "input":true}, //report
+//                            "algorithm": {"flag": "-a", "input":true}, "size": {"flag": "--size", "input":true}, "max-length": {"flag": "-m", "input":true}, //Sample
+//                            "size": {"flag": "--size", "input":true}, "algorithm": {"flag": "-a", "input":true}, "ranking-function": {"flag": "--ranking-function", "input":true}, //Ensembler
+//                            "format": {"flag": "-f", "input":true}//Gen-Book
+//                            }
 
  // Function to download a file
  function downloadFile(url, dest) {
@@ -28,31 +37,28 @@ const util = require('util');
      });
  }
 
-
  async function run() {
      try {
          let command = core.getInput('command');
-         let stringBasicParameters = core.getInput('basic_parameters');
+         let run = core.getInput('run');
+         console.log(`$$$$$$$$$$$$ : ${run} $$$$$$$$$$`);
+
          let basicParameters = JSON.parse(core.getInput('basic_parameters'));
-         let stringCommandParameters = core.getInput('command_parameters');
          let commandParameters = JSON.parse(core.getInput('command_parameters'));
 
          console.log(`command: ${command}`);
-         console.log(`basicParameters: ${stringBasicParameters}`);
-         console.log(`commandParameters: ${stringCommandParameters}`);
 
          // Define the URL to download from (customize this)
          let downloadProvengo = 'https://downloads.provengo.tech/unix-dist/deb/Provengo-deb.deb';
          let outputFilePath = "./Provengo-deb.deb";
          // Download the software
          await downloadFile(downloadProvengo, outputFilePath);
-         console.log("1")
+
          //   let softwarePath = path.resolve('./your-software/your-executable-or-script'); // Adjust as needed
 
             // Set permissions if needed (for Unix-like systems)
          fs.chmodSync(outputFilePath, '755'); // Make executable
 
-        console.log("2")
          // Unzip the downloaded software if it’s a zip file (adjust as needed)
          let installProvengo = `sudo apt-get install ${outputFilePath}`;
          let output = execSync(installProvengo);
