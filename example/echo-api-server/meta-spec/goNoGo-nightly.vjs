@@ -1,0 +1,19 @@
+const REPORT_ID = 'report name'
+const ROWS = [
+  {
+    title: '<row title>',
+    description: '<row description>',
+    func: function () {
+      bthread(this.title + ": bt1", function () {
+        sync({waitFor: ...})
+        sync({waitFor: ...})
+        ...
+        test.accepting(bp.thread.name)
+      })
+    }
+  },
+]
+
+for (let i = 0; i < ROWS.length; i++) {
+  ROWS[i].func()
+}

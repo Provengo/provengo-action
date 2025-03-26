@@ -1,0 +1,6 @@
+version: 2
+visualization:
+  layout: horizontal
+rest-api:
+  ssl:
+    validation: false

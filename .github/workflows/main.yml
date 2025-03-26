@@ -20,8 +20,8 @@ jobs:
       - name: create new provengo program
         run: provengo --batch create ./new/test
 
-      - name: run my new project
-        run: provengo run ./new/test
+      - name: run echo example
+        run: provengo run example/echo-api-server
 
 #
 #on: [push]
