@@ -12,20 +12,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: echo
+      - name: install provengo
         uses: ./
         with:
           command: 'echo "Executing command with parameters"'
-#        run: provengo create .new/test2
 
+      - name: create new provengo program
+        run: provengo create ./new/test
 
-      - name: Run My Download Action
-        uses: ./
-        with:
-          command: 'run'
-          basic_parameters: '{"param1":"value1","param2":"value2"}'
-          command_parameters: '{"paramA":"valueA","paramB":"valueB"}'
-
+      - name: run my new project
+        run: provengo run ./new/test
 
 #
 #on: [push]

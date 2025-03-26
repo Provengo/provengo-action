@@ -40,7 +40,8 @@ const util = require('util');
  async function run() {
      try {
          let command = core.getInput('command');
-         console.log(`###### : ${run} #######`);
+
+//         console.log(`###### : ${run} #######`);
 
          let basicParameters = JSON.parse(core.getInput('basic_parameters'));
          let commandParameters = JSON.parse(core.getInput('command_parameters'));
@@ -61,36 +62,31 @@ const util = require('util');
          // Unzip the downloaded software if it’s a zip file (adjust as needed)
          let installProvengo = `sudo apt-get install ${outputFilePath}`;
          let output = execSync(installProvengo);
-        console.log("3")
-         // Build the command to run your software
-         let params = [
-             // JSON.stringify(basicParameters),     // Basic parameters
-             // JSON.stringify(commandParameters)     // Command-specific parameters
-         ].join(' ');
 
-         let fullCommand = `provengo --batch-mode create new/pr`;
 //
-         console.log("4")
-         exec(fullCommand, (executeError, stdout, stderr) => {
-             if (executeError) {
-                 core.setFailed(`Execution failed: ${executeError.message}`);
-                 return;
-             }
-             console.log(`create provengo Output: ${stdout}`);
-             console.error(`create provengo Errors: ${stderr}`);
-         });
-//
-         console.log("5")
-         fullCommand = `provengo run new/pr`;
-         exec(fullCommand, (executeError, stdout, stderr) => {
-             if (executeError) {
-                 core.setFailed(`Execution failed: ${executeError.message}`);
-                 return;
-             }
-             console.log(`run provengo Output: ${stdout}`);
-             console.error(`run provengo Errors: ${stderr}`);
-         });
-        console.log("6")
+//         let fullCommand = `provengo --batch-mode create new/pr`;
+////
+//         console.log("4")
+//         exec(fullCommand, (executeError, stdout, stderr) => {
+//             if (executeError) {
+//                 core.setFailed(`Execution failed: ${executeError.message}`);
+//                 return;
+//             }
+//             console.log(`create provengo Output: ${stdout}`);
+//             console.error(`create provengo Errors: ${stderr}`);
+//         });
+////
+//         console.log("5")
+//         fullCommand = `provengo run new/pr`;
+//         exec(fullCommand, (executeError, stdout, stderr) => {
+//             if (executeError) {
+//                 core.setFailed(`Execution failed: ${executeError.message}`);
+//                 return;
+//             }
+//             console.log(`run provengo Output: ${stdout}`);
+//             console.error(`run provengo Errors: ${stderr}`);
+//         });
+//        console.log("6")
      } catch (error) {
          core.setFailed(error.message);
      }
