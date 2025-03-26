@@ -29,7 +29,7 @@ function downloadFile(url, dest) {
 async function run() {
 //    verify if provengo is installed, else install.
     try {
-        const stdout = execSync(`provengo -v`);
+        const stdout = execSync(`provengo -v`, { encoding: 'utf-8' });
         console.log(`Provengo Installed, Version: ${stdout.trim()}`);
     } catch (error) {
          console.log("Install Provengo");
@@ -60,8 +60,7 @@ async function run() {
                 }
                 console.error(`stderr: ${stderr}`);
             });
-            let version = execSync(`provengo -v`);
-            console.log(version);
+            let version = execSync(`provengo -v`, { encoding: 'utf-8' });
             console.log(`Provengo Installed, Version: ${version.trim()}`);
 
         } catch (error) {
