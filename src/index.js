@@ -60,8 +60,9 @@ async function run() {
                 }
                 console.error(`stderr: ${stderr}`);
             });
-            const stdout = execSync(`provengo -v`);
-            console.log(`Provengo Installed, Version: ${stdout.trim()}`);
+            let version = execSync(`provengo -v`);
+            console.log(version);
+            console.log(`Provengo Installed, Version: ${version.trim()}`);
 
         } catch (error) {
             core.setFailed(error.message);
