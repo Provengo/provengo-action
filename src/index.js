@@ -54,6 +54,7 @@ async function run() {
             await downloadFile(downloadProvengo, outputFilePath); // Download the software
             fs.chmodSync(outputFilePath, '755'); // Make executable
             let output = execSync(installProvengo);
+            console.log(output);
 
         } catch (error) {
             core.setFailed(error.message);
