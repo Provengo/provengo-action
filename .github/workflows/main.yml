@@ -21,30 +21,9 @@ jobs:
       - name: report echo
         run: provengo report example/echo-api-server
 
-      - name: Upload report for later
-        uses: actions/upload-artifact@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: reports
-          path: example/echo-api-server/products
-#
-#on: [push]
-#
-#jobs:
-#  hello_world_job:
-#    runs-on: ubuntu-latest
-#    name: A job to say hello
-#    steps:
-#      # To use this repository's private action,
-#      # you must check out the repository
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#      - name: Hello world action step
-#        uses: ./ # Uses an action in the root directory
-#        id: hello
-#        with:
-#          who-to-greet: 'Mona the Octocat'
-#      # Use the output from the `hello` step
-#      - name: Get the output time
-#        run: echo "The time was ${{ steps.hello.outputs.time }}"
-#
-#
+          github_token: ${{ secrets.GITHUB_TOKEN }}    # GitHub Token
+          publish_dir: example/echo-api-server/products/reports
+
