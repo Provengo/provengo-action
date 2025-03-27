@@ -1,33 +1,5 @@
  name: 'provengo'
  description: 'run your provengo program'
- inputs:
-   command:
-     description: 'Command to run'
-     required: true
-     default: 'run'
-   basic_parameters:
-     description: 'Basic parameters as JSON object'
-     required: false
-     default: '{}'
-   command_parameters:
-     description: 'Command-specific parameters as JSON object'
-     required: false
-     default: '{}'
  runs:
    using: 'node20'
    main: 'src/index.js'
-
-#
-#name: 'provengo'
-#description: 'Greet someone and record the time'
-#inputs:
-#  who-to-greet:  # id of input
-#    description: 'Who to greet'
-#    required: true
-#    default: 'World'
-#outputs:
-#  time: # id of output
-#    description: 'The time we greeted you'
-#runs:
-#  using: 'node20'
-#  main: 'src/index.js'
