@@ -21,9 +21,9 @@ jobs:
       - name: report echo
         run: provengo report example/echo-api-server
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy report
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}    # GitHub Token
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # The GitHub token is provided automatically
           publish_dir: example/echo-api-server/products/reports
 
