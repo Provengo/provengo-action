@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>TestLog report for echo-api-server</title>
+
+            <link rel="stylesheet" type="text/css" href="https://content.provengo.tech/v1/css-dist/reset.min.css">
+            <link rel="stylesheet" type="text/css" href="https://content.provengo.tech/v1/css-dist/provengoBase.min.css">
+            <link rel="stylesheet" type="text/css" href="https://content.provengo.tech/v1/css-dist/resultColors.min.css">
+
+    <script>
+      const rows = [{"runSource":":random","startTime":"2025-03-27 09:20:45","id":1,"projectName":"echo-api-server","scriptsRecord":[]}];
+    </script>
+</head>
+<body>
+<header class="brand-bkg-gradient">
+    <div class="logo">Provengo Tests Report</div>
+    <h1>Test Log Report for <em>echo-api-server</em></h1>
+    <p>Path: <code><a href="file:///home/runner/work/provengo-action/provengo-action/example/echo-api-server">/home/runner/work/provengo-action/provengo-action/example/echo-api-server</a></code></p>
+</header>
+
+<table class="indexTable">
+    <thead>
+        <tr>
+            <th>Suites</th>
+            <th>Run Source</th>
+            <th>Run Count</th>
+            <th>Start Time</th>
+            <th>Duration</th>
+            <th>Results</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr id="runRow1" onclick="document.location='suites/suite-1/index.html'">
+            <th><a href="suites/suite-1/index.html">Suite-1</a></th>
+            <td>
+                <span class="rs-badge rs-badge-random">:random</span>
+            </td>
+            <td>1</td>
+            <td>2025-03-27T09:20:45</td>
+            <td>0:00:02</td>
+            <td>
+               <div class="result-bar">
+                        <span class="result-badge result-SUCCESS">Success:1</span>
+               </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<footer class="brand-bkg-gradient">
+    <div>2025-03-27 09:20:49</div>
+    <div class="brand-fg-dark">Created with <a href="https://provengo.tech/?utm=log" target="_blank">Provengo</a></div>
+</footer>
+
+<script>
+  const MODES = ['NOT', 'IGNORE']
+  MODES.NOT = MODES[0]
+  MODES.IGN = MODES[1]
+  const filters = {}
+
+  function updateFilter(filter, value, mode) {
+    const key = filter + '\n' + value
+    if (mode === MODES.IGN) {
+      delete filters[key]
+    } else {
+      filters[key] = mode
+    }
+
+    // prepare filters, [K1, E]
+    // where K1: filter name, E expected value
+    const filterKVs = []
+    Object.keys(filters).forEach(f => {
+      const cs = f.split('\n')
+      filterKVs.push([cs[0], cs[1]])
+    })
+
+    if (filterKVs.length === 0) {
+      document.querySelectorAll('table tbody tr').forEach(r => r.style.display = '')
+
+    } else {
+      // filter rows
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i]
+        let shouldShow = true
+        filterKVs.forEach(f => {
+          if (shouldShow) {
+            const rowValue = row[f[0]]
+            const filterValue = f[1]
+            shouldShow = (filterValue !== rowValue)
+          }
+        })
+        const tableRow = document.getElementById('runRow' + (i + 1))
+        tableRow.style.display = (shouldShow ? '' : 'none')
+      }
+    }
+  }
+
+  function setup() {
+    // detect button triplets
+    document.querySelectorAll('.varFilter').forEach(vf => {
+      const filterName = vf.dataset.filter
+      const valueDivs = vf.getElementsByClassName('value')
+      for (let index = 0; index < valueDivs.length; index++) {
+        const vd = valueDivs[index]
+        const value = vd.dataset.value
+        const buttons = Array.from(vd.getElementsByTagName('button'))
+
+        const resetAll = () => buttons.forEach(b => b.classList.remove('active'))
+        buttons.forEach((btn, idx) => {
+          btn.addEventListener('click', e => {
+            resetAll()
+            btn.classList.add('active')
+            updateFilter(filterName, value, MODES[idx])
+          })
+        })
+
+      }
+
+    })
+
+  }
+
+  if (document.readyState !== 'loading') {
+    setup()
+
+  } else {
+    document.addEventListener('DOMContentLoaded', setup)
+  }
+</script>
+</body>
+</html>

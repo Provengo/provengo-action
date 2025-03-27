@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TestLog report for echo-api-server</title>
+
+            <link rel="stylesheet" type="text/css" href="https://content.provengo.tech/v1/css-dist/reset.min.css">
+            <link rel="stylesheet" type="text/css" href="https://content.provengo.tech/v1/css-dist/provengoBase.min.css">
+            <link rel="stylesheet" type="text/css" href="https://content.provengo.tech/v1/css-dist/resultColors.min.css">
+            <link rel="stylesheet" type="text/css" href="https://content.provengo.tech/v1/css-dist/run-page.min.css">
+    <style>
+        ol.actuations {
+            padding-left: 0;
+        }
+        table.indexTable div.result-bar span.result-badge {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<header class="brand-bkg-gradient">
+    <div class="logo">Provengo Tests Report</div>
+    <h1><a class="btn" href="../../index.html">&larr;</a> Suite Execution Report for <em>echo-api-server/1</em></h1>
+    <ul class="run-metadata">
+        <li><span class="key">Start</span><span class="value">2025-03-27 09:20:45</span></li>
+        <li>
+            <span class="key">Run Source</span>
+                <span class="rs-badge rs-badge-random">
+                    :random
+                </span>
+        </li>
+        <li><span class="key">Run Count</span><span class="value">1</span></li>
+        <li>
+            <span class="key">Results</span>
+            <span class="result-bar" style=" display:inline-grid;">
+                  <span class="result-badge result-SUCCESS">Success:1</span>
+            </span>
+        </li>
+        <li class="flush">
+          <a class="btn btn-sm brand-fg-dark" href="suite-1-sample.json" download="provengo-suite-1.json">&darr; D/L Run Source</a>
+        </li>
+    </ul>
+</header>
+
+
+<table class="indexTable">
+    <thead>
+    <tr>
+        <th><code>Id</code> Title</th>
+        <th>Start</th>
+        <th>Duration</th>
+        <th>Event Count</th>
+        <th>Message</th>
+        <th>Result</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr id="runRow1" onclick="document.location='runs/run-1/index.html'">
+                <th><a href="runs/run-1/index.html"><code>1</code> </a></th>
+            <td>2025-03-27T09:20:45</td>
+            <td>0:00:02</td>
+            <td>
+                4
+            </td>
+            <td>
+            </td>
+            <td>
+                <div class="result-bar">
+                    <span class="result-badge result-SUCCESS">SUCCESS</span>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<footer class="brand-bkg-gradient">
+    <div>2025-03-27 09:20:49</div>
+    <div class="brand-fg-dark">Created with <a href="https://provengo.tech/?utm=log" target="_blank">Provengo</a></div>
+</footer>
+
+<script>
+  const MODES = ['NOT', 'IGNORE']
+  MODES.NOT = MODES[0]
+  MODES.IGN = MODES[1]
+  const filters = {}
+
+  function updateFilter(filter, value, mode) {
+    const key = filter + '\n' + value
+    if (mode === MODES.IGN) {
+      delete filters[key]
+    } else {
+      filters[key] = mode
+    }
+
+    // prepare filters, [K1, E]
+    // where K1: filter name, E expected value
+    const filterKVs = []
+    Object.keys(filters).forEach(f => {
+      const cs = f.split('\n')
+      filterKVs.push([cs[0], cs[1]])
+    })
+
+    if (filterKVs.length === 0) {
+      document.querySelectorAll('table tbody tr').forEach(r => r.style.display = '')
+
+    } else {
+      // filter rows
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i]
+        let shouldShow = true
+        filterKVs.forEach(f => {
+          if (shouldShow) {
+            const rowValue = row[f[0]]
+            const filterValue = f[1]
+            shouldShow = (filterValue !== rowValue)
+          }
+        })
+        const tableRow = document.getElementById('runRow' + (i + 1))
+        tableRow.style.display = (shouldShow ? '' : 'none')
+      }
+    }
+  }
+
+  function setup() {
+    // detect button triplets
+    document.querySelectorAll('.varFilter').forEach(vf => {
+      const filterName = vf.dataset.filter
+      const valueDivs = vf.getElementsByClassName('value')
+      for (let index = 0; index < valueDivs.length; index++) {
+        const vd = valueDivs[index]
+        const value = vd.dataset.value
+        const buttons = Array.from(vd.getElementsByTagName('button'))
+
+        const resetAll = () => buttons.forEach(b => b.classList.remove('active'))
+        buttons.forEach((btn, idx) => {
+          btn.addEventListener('click', e => {
+            resetAll()
+            btn.classList.add('active')
+            updateFilter(filterName, value, MODES[idx])
+          })
+        })
+
+      }
+
+
+    })
+
+  }
+
+  if (document.readyState !== 'loading') {
+    setup()
+
+  } else {
+    document.addEventListener('DOMContentLoaded', setup)
+  }
+</script>
+</body>
+</html>
