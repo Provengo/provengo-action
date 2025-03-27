@@ -14,15 +14,18 @@ jobs:
 
       - name: install provengo
         uses: ./
-        with:
-          command: 'echo "Executing command with parameters"'
 
-      - name: create new provengo program
-        run: provengo --batch create ./new/test
-
-      - name: run echo example
+      - name: run echo
         run: provengo run example/echo-api-server
 
+      - name: report echo
+        run: provengo report example/echo-api-server
+
+      - name: Upload report for later
+        uses: actions/upload-artifact@v2
+        with:
+          name: reports
+          path: example/echo-api-server/products
 #
 #on: [push]
 #
