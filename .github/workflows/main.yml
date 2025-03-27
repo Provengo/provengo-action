@@ -9,8 +9,8 @@ jobs:
   run-download-action:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+#      - name: Checkout code
+#        uses: actions/checkout@v2
 
       - name: install provengo
         uses: ./
@@ -20,10 +20,3 @@ jobs:
 
       - name: report echo
         run: provengo report example/echo-api-server
-
-      - name: Deploy report
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # The GitHub token is provided automatically
-          publish_dir: example/echo-api-server/products/reports
-
