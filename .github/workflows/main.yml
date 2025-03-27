@@ -25,4 +25,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: report
-          path: products/reports
+          path: example/echo-api-server/products/reports
