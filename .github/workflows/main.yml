@@ -20,3 +20,9 @@ jobs:
 
       - name: report echo
         run: provengo report example/echo-api-server
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: report
+          path: products/reports
