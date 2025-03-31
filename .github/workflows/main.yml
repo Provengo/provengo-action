@@ -16,12 +16,12 @@ jobs:
         uses: ./
 
       - name: run echo
-        run: provengo run example/echo-api-server
+        run: provengo run provengo/provengo-project
 
       - name: report echo
-        run: provengo report example/echo-api-server
+        run: provengo report provengo/provengo-project
 
-      - name: Upload Artifact
+      - name: save report
         uses: actions/upload-artifact@v4
         with:
           name: report
