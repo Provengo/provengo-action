@@ -1,4 +1,4 @@
-# `@actions/Provengo`
+# `actions/Provengo`
 
 Run your Provengo project in GitHub action easily.
 
