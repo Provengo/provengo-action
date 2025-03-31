@@ -15,10 +15,10 @@ jobs:
       - name: install provengo
         uses: ./
 
-      - name: run echo
+      - name: run provengo-project
         run: provengo run provengo/provengo-project
 
-      - name: report echo
+      - name: report provengo-project
         run: provengo report provengo/provengo-project
 
       - name: save report
